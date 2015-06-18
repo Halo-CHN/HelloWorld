@@ -3,8 +3,6 @@ package com.chn.halo.core;
 import java.io.File;
 import java.util.List;
 
-import com.hengyirong.GlobalConstants;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;

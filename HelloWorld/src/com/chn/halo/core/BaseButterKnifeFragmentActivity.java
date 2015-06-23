@@ -19,7 +19,7 @@ import android.view.Window;
  * @version 1.0
  *
  */
-public abstract class BaseFragmentActivity extends FragmentActivity {
+public abstract class BaseButterKnifeFragmentActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -19,7 +19,7 @@ import android.view.Window;
  * @version 1.0
  *
  */
-public abstract class BaseButterKnifeActivity extends Activity {
+public abstract class BaseButterKnifeActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,7 +27,7 @@ public abstract class BaseButterKnifeActivity extends Activity {
 		ActivityController.add(this);
 		// 去掉标题栏
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		// 去掉信息栏
 		// this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -59,6 +59,14 @@ public abstract class BaseButterKnifeActivity extends Activity {
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * 
+	 * @return 得到当前类
+	 */
+	protected BaseButterKnifeActivity getThis() {
+		return this;
 	}
 
 	/**

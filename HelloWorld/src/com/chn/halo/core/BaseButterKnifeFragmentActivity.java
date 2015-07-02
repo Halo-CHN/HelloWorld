@@ -60,6 +60,14 @@ public abstract class BaseButterKnifeFragmentActivity extends FragmentActivity {
 
 	/**
 	 * 
+	 * @return 得到当前类
+	 */
+	protected BaseButterKnifeFragmentActivity getThis() {
+		return this;
+	}
+
+	/**
+	 * 
 	 * @return 是否支持后退键 true-可后退 false-双次退出程序
 	 */
 	protected abstract boolean supportBackKey();

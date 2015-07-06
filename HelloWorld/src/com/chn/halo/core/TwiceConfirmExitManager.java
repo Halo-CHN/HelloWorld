@@ -57,12 +57,11 @@ public class TwiceConfirmExitManager {
 	 */
 	public void showToast(Context context, Stack<? extends Activity> activities) {
 		if (time == 0) {
-			toast = Toast.makeText(context, "再按一次返回将退出程序", FINALSECOND * 1000);
+			toast = Toast.makeText(context.getApplicationContext(), "再按一次返回将退出程序", FINALSECOND * 1000);
 			toast.show();
 			timeGos();
 		} else {
 			timer = null;
-			toast.cancel();
 			if (null != activities) {
 				for (Activity ac : activities) {
 					if (null != ac && !ac.isFinishing())

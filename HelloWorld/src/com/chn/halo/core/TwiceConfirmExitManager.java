@@ -1,9 +1,6 @@
 package com.chn.halo.core;
 
-import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
@@ -39,14 +36,7 @@ public class TwiceConfirmExitManager {
 		return instance;
 	}
 
-	/* 程序确认退出时间间隔 */
-	private final int FINALSECOND = 3;
-
-	private int time = 0;
-
-	Timer timer = new Timer();
-
-	Toast toast = null;
+	private long timeStamp = 0;
 
 	/**
 	 * 
@@ -55,37 +45,20 @@ public class TwiceConfirmExitManager {
 	 * @param activities
 	 *            当前应用中已经打开的Activity
 	 */
-	public void showToast(Context context, Stack<? extends Activity> activities) {
-		if (time == 0) {
-			toast = Toast.makeText(context.getApplicationContext(), "再按一次返回将退出程序", FINALSECOND * 1000);
-			toast.show();
-			timeGos();
-		} else {
-			timer = null;
-			if (null != activities) {
+	public void showToast(Context context, List<? extends Activity> activities) {
+
+		if ((System.currentTimeMillis() - timeStamp) < 2000) {// Toast.LENGTH_SHORT
+																// 的显示时间大概2秒
+			if (null != activities && activities.size() > 0) {
 				for (Activity ac : activities) {
-					if (null != ac && !ac.isFinishing())
+					if (null != ac)
 						ac.finish();
 				}
 			}
 			System.exit(0);
+		} else {
+			timeStamp = System.currentTimeMillis();
+			Toast.makeText(context.getApplicationContext(), "再按一次返回将退出程序", Toast.LENGTH_SHORT).show();
 		}
-	}
-
-	/**
-	 * 计时器运行
-	 */
-	private void timeGos() {
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				time++;
-				if (time == FINALSECOND) {
-					time = 0;
-					this.cancel();
-				}
-			}
-		}, 0, 1000);
 	}
 }

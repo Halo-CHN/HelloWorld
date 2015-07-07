@@ -15,7 +15,7 @@ import android.widget.Toast;
  *
  * @date 2015年7月7日
  *
- * @version 2.0
+ * @version 1.0
  *
  */
 public class TwiceConfirmExitManager {

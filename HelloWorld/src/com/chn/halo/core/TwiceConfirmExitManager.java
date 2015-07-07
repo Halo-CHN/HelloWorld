@@ -6,16 +6,16 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
+ * 
+ * @description 两次确认退出应用程序 
  *
- * @description 两次确认退出应用程序
+ * @author Halo-CHN
  *
- * @author Wiken
+ * @mail halo-chn@outlook.com
  *
- * @mail root_wiken@163.com
+ * @date 2015年7月7日
  *
- * @date 2015年4月15日
- *
- * @version 1.0
+ * @version 2.0
  *
  */
 public class TwiceConfirmExitManager {

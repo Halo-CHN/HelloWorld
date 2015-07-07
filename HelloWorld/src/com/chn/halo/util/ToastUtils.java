@@ -4,9 +4,17 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * ToastUtils
- * 
- * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2013-12-9
+ *
+ * @description Toast工具类 
+ *
+ * @author Halo-CHN
+ *
+ * @mail halo-chn@outlook.com
+ *
+ * @date 2015年7月7日
+ *
+ * @version 1.0
+ *
  */
 public class ToastUtils {
 

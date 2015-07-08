@@ -49,6 +49,14 @@ public abstract class BaseButterKnifeFragment extends Fragment {
 		/* 回收 */
 		ButterKnife.reset(this);
 	}
+	
+	/**
+	 * 
+	 * @return 得到当前类
+	 */
+	protected BaseButterKnifeFragmentActivity getThis() {
+		return (BaseButterKnifeFragmentActivity) this.getActivity();
+	}
 
 	/**
 	 * 得到初始化Fragment的View所加载的Layout资源

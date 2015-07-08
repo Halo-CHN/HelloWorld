@@ -1,13 +1,32 @@
 package com.chn.halo.ui;
 
-import android.content.Intent;
-import butterknife.OnClick;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import butterknife.InjectView;
 
 import com.chn.halo.R;
-import com.chn.halo.core.BaseButterKnifeActivity;
+import com.chn.halo.core.BaseButterKnifeFragmentActivity;
 import com.chn.halo.util.ToastUtils;
+import com.chn.halo.view.bottomtabbar.HaloFragmentManager;
+import com.chn.halo.view.bottomtabbar.HaloViewPager;
+import com.chn.halo.view.bottomtabbar.OnSelectableTextViewClickedListener;
+import com.chn.halo.view.bottomtabbar.SelectableBottomTextView;
+import com.chn.halo.view.bottomtabbar.SelectableBottomTextViewAttributesEx;
 
-public class MainActivity extends BaseButterKnifeActivity {
+/**
+ *
+ * @description 主页面
+ *
+ * @author Halo-CHN
+ *
+ * @mail halo-chn@outlook.com
+ *
+ * @date 2015年7月8日
+ *
+ * @version 1.0
+ *
+ */
+public class MainActivity extends BaseButterKnifeFragmentActivity {
 
 	@Override
 	protected boolean supportBackKey() {
@@ -19,15 +38,79 @@ public class MainActivity extends BaseButterKnifeActivity {
 		return R.layout.activity_main;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void initializeAfterOnCreate() {
-		ToastUtils.show(this, "Welcome To Halo's World.");
+		ToastUtils.show(getThis(), "Welcome To Halo's World.");
+		SelectableBottomTextViewAttributesEx.onSelectableTextViewID = bottom_tab_home.getId();
+		bottom_tab_home.setOnTextViewClickedListener(bottomListener);
+		bottom_tab_account.setOnTextViewClickedListener(bottomListener);
+		bottom_tab_more.setOnTextViewClickedListener(bottomListener);
+		if (null == homeFragment)
+			homeFragment = new HomeFragment();
+		if (null == accountFragment)
+			accountFragment = new AccountFragment();
+		if (null == moreFragment)
+			moreFragment = new MoreFragment();
+		/* 点击底部导航切换时触发事件 */
+		main_viewpager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+
+			}
+
+			@Override
+			public void onPageScrolled(int position, float arg1, int arg2) {
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int position) {
+			}
+		});
+		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(R.id.bottom_tab_home, homeFragment);
+		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(R.id.bottom_tab_account, accountFragment);
+		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(R.id.bottom_tab_more, moreFragment);
 	}
 
-	@OnClick(R.id.main_btn_test)
-	void Test() {
-		Intent intent = new Intent(getThis(), SecondActivity.class);
-		intent.putExtra("TEST", "TEST");
-		startActivity(intent);
-	}
+	/**
+	 * 底部导航点击事件回调
+	 */
+	OnSelectableTextViewClickedListener bottomListener = new OnSelectableTextViewClickedListener() {
+
+		@Override
+		public void onTextViewClicked(View v) {
+			if (!SelectableBottomTextViewAttributesEx.supportClickWhenSelected && v.getId() == SelectableBottomTextViewAttributesEx.onSelectableTextViewID)
+				return;
+			switch (v.getId()) {
+			case R.id.bottom_tab_home:
+				break;
+			case R.id.bottom_tab_account:
+				break;
+			case R.id.bottom_tab_more:
+				break;
+			}
+			SelectableBottomTextViewAttributesEx.onSelectableTextViewID = v.getId();
+			HaloFragmentManager.getInstance(main_viewpager, getSupportFragmentManager()).clickToChangeFragment(v.getId());
+		}
+	};
+
+	HomeFragment homeFragment;
+
+	AccountFragment accountFragment;
+
+	MoreFragment moreFragment;
+
+	@InjectView(R.id.main_viewpager)
+	HaloViewPager main_viewpager;
+
+	@InjectView(R.id.bottom_tab_home)
+	SelectableBottomTextView bottom_tab_home;
+
+	@InjectView(R.id.bottom_tab_account)
+	SelectableBottomTextView bottom_tab_account;
+
+	@InjectView(R.id.bottom_tab_more)
+	SelectableBottomTextView bottom_tab_more;
 }

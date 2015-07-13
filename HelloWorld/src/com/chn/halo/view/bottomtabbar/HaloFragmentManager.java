@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -46,44 +47,80 @@ public class HaloFragmentManager {
 		return instance;
 	}
 
+	@SuppressWarnings("deprecation")
 	@SuppressLint("UseSparseArrays")
 	private HaloFragmentManager() {
-		fragmetsMap = new HashMap<Integer, Fragment>();
+		fragmetsMap = new HashMap<SelectableBottomTextView, Fragment>();
 		fragments = new ArrayList<Fragment>();
+		bTextViews = new ArrayList<SelectableBottomTextView>();
 		viewPager.setSlipping(false);
 		viewPager.setOffscreenPageLimit(5);
 		haloPagerAdapter = new HaloPagerAdapter();
 		viewPager.setAdapter(haloPagerAdapter);
+		/* 点击底部导航切换时触发事件 */
+		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+				for (int i = 0; i < getBottomTextViews().size(); i++) {
+					getBottomTextViews().get(i).setTextViewSelected(i == position);
+				}
+				SelectableBottomTextViewAttributesEx.onSelectableTextViewID = getBottomTextViews().get(position).getId();
+			}
+
+			@Override
+			public void onPageScrolled(int position, float arg1, int arg2) {
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int position) {
+			}
+		});
 	}
 
-	private Map<Integer, Fragment> fragmetsMap;
+	private Map<SelectableBottomTextView, Fragment> fragmetsMap;
 
 	private static HaloViewPager viewPager;
 
 	private static List<Fragment> fragments;
 
+	private static List<SelectableBottomTextView> bTextViews;
+
 	private static FragmentManager fragmentManager;
 
 	private HaloPagerAdapter haloPagerAdapter;
 
-	public void addFragment(int key, Fragment valueFragment) {
+	public void addFragment(SelectableBottomTextView key, Fragment valueFragment) {
 		if (!fragmetsMap.containsKey(key)) {
 			fragmetsMap.put(key, valueFragment);
 			fragments.add(valueFragment);
+			bTextViews.add(key);
 			haloPagerAdapter.notifyDataSetChanged();
 		}
 	}
 
 	public void clickToChangeFragment(int id) {
-		viewPager.setCurrentItem(fragments.indexOf(fragmetsMap.get(id)), false);
+		if (!(SelectableBottomTextViewAttributesEx.onSelectableTextViewID == id)) {
+			for (SelectableBottomTextView selectableBottomTextView : bTextViews) {
+				if (selectableBottomTextView.getId() == id) {
+					viewPager.setCurrentItem(bTextViews.indexOf(selectableBottomTextView), false);
+				}
+			}
+			SelectableBottomTextViewAttributesEx.onSelectableTextViewID = id;
+		}
 	}
 
-	public Map<Integer, Fragment> getFragmentMap() {
+	public Map<SelectableBottomTextView, Fragment> getFragmentMap() {
 		return this.fragmetsMap;
 	}
 
 	public List<Fragment> getFragments() {
 		return fragments;
+	}
+
+	public List<SelectableBottomTextView> getBottomTextViews() {
+		return bTextViews;
 	}
 
 	private static class HaloPagerAdapter extends PagerAdapter {

@@ -1,6 +1,7 @@
 package com.chn.halo.net;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import org.apache.http.Header;
@@ -52,6 +53,44 @@ public class AndroidAsyncHttpHelper {
 	}
 
 	/**
+	 * 为http client 添加 header （默认清空所有之前的添加）
+	 * 
+	 * @param header
+	 *            key
+	 * @param value
+	 *            value
+	 */
+	public void addHeader(String header, String value) {
+		addHeader(header, value, true);
+	}
+
+	/**
+	 * 为http client 添加 header
+	 * 
+	 * @param header
+	 *            key
+	 * @param value
+	 *            value
+	 * @param needRemoveAll
+	 *            添加前是否需要清空
+	 */
+	public void addHeader(String header, String value, boolean needRemoveAll) {
+		if (needRemoveAll) {
+			removeAllHeaders();
+		}
+		client.addHeader(header, value);
+	}
+
+	/**
+	 * 清空所有header
+	 */
+	public void removeAllHeaders() {
+		if (null != client) {
+			client.removeAllHeaders();
+		}
+	}
+
+	/**
 	 * HTTP GET METHODs --无参数 -- 存在异常或者请求超时情况下，回调返回值将是空字符串
 	 * 
 	 * @param context
@@ -61,8 +100,7 @@ public class AndroidAsyncHttpHelper {
 	 * @param callback
 	 *            请求完成后回调的方法
 	 */
-	public void get(Context context, String url,
-			final AsyncHttpResponseHandler callback) {
+	public void get(Context context, String url, final HaloAsyncHttpResponseHandler callback) {
 		httpRequest(context, url, null, callback, EHttpMethod.GET);
 	}
 
@@ -78,8 +116,7 @@ public class AndroidAsyncHttpHelper {
 	 * @param callback
 	 *            请求完成后回调的方法
 	 */
-	public void get(Context context, String url, Map<String, Object> params,
-			final AsyncHttpResponseHandler callback) {
+	public void get(Context context, String url, Map<String, Object> params, final HaloAsyncHttpResponseHandler callback) {
 		httpRequest(context, url, params, callback, EHttpMethod.GET);
 	}
 
@@ -93,8 +130,7 @@ public class AndroidAsyncHttpHelper {
 	 * @param callback
 	 *            请求完成后回调的方法
 	 */
-	public void post(Context context, String url,
-			final AsyncHttpResponseHandler callback) {
+	public void post(Context context, String url, final HaloAsyncHttpResponseHandler callback) {
 		httpRequest(context, url, null, callback, EHttpMethod.POST);
 	}
 
@@ -110,8 +146,7 @@ public class AndroidAsyncHttpHelper {
 	 * @param callback
 	 *            请求完成后回调的方法
 	 */
-	public void post(Context context, String url, Map<String, Object> params,
-			final AsyncHttpResponseHandler callback) {
+	public void post(Context context, String url, Map<String, Object> params, final HaloAsyncHttpResponseHandler callback) {
 		httpRequest(context, url, params, callback, EHttpMethod.POST);
 	}
 
@@ -129,13 +164,35 @@ public class AndroidAsyncHttpHelper {
 	 * @param method
 	 *            POST or GET
 	 */
-	private void httpRequest(Context context, String url,
-			Map<String, Object> params,
-			final AsyncHttpResponseHandler callback, EHttpMethod method) {
+	private void httpRequest(Context context, String url, Map<String, Object> params, final HaloAsyncHttpResponseHandler callback, EHttpMethod method) {
 		/* 判断网络状态 */
+		AsyncHttpResponseHandler asyncHttpResponseHandler = new AsyncHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(int code, Header[] headers, byte[] arg2) {
+				String res = "";
+				try {
+					res = new String(arg2, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				} finally {
+					callback.callback(res);
+					client.removeAllHeaders();
+				}
+			}
+
+			@Override
+			public void onFailure(int code, Header[] headers, byte[] arg2, Throwable arg3) {
+				if (code == 404) {
+				} else {
+					callback.callback("");
+				}
+				client.removeAllHeaders();
+			}
+		};
 		if (!InternetUtil.isNetWorking(context)) {
 			String str = "无网络";
-			callback.sendFailureMessage(404, null, str.getBytes(), null);
+			asyncHttpResponseHandler.sendFailureMessage(404, null, str.getBytes(), null);
 			return;
 		}
 		/* 得到请求参数 */
@@ -145,14 +202,13 @@ public class AndroidAsyncHttpHelper {
 				requestParams.put(key, params.get(key));
 			}
 		}
-
 		switch (method) {
 		case GET:
-			client.get(context, url, requestParams, callback);
+			client.get(context, url, requestParams, asyncHttpResponseHandler);
 			break;
 
 		case POST:
-			client.post(context, url, requestParams, callback);
+			client.post(context, url, requestParams, asyncHttpResponseHandler);
 			break;
 
 		default:
@@ -179,14 +235,12 @@ public class AndroidAsyncHttpHelper {
 			/* 上传文件 */
 			client.post(url, params, new AsyncHttpResponseHandler() {
 				@Override
-				public void onSuccess(int statusCode, Header[] headers,
-						byte[] responseBody) {
+				public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 					/* 上传成功后要做的工作 */
 				}
 
 				@Override
-				public void onFailure(int statusCode, Header[] headers,
-						byte[] responseBody, Throwable error) {
+				public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 				}
 
 				@Override

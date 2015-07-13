@@ -1,6 +1,5 @@
 package com.chn.halo.ui;
 
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import butterknife.InjectView;
 
@@ -38,7 +37,6 @@ public class MainActivity extends BaseButterKnifeFragmentActivity {
 		return R.layout.activity_main;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void initializeAfterOnCreate() {
 		ToastUtils.show(getThis(), "Welcome To Halo's World.");
@@ -52,26 +50,10 @@ public class MainActivity extends BaseButterKnifeFragmentActivity {
 			accountFragment = new AccountFragment();
 		if (null == moreFragment)
 			moreFragment = new MoreFragment();
-		/* 点击底部导航切换时触发事件 */
-		main_viewpager.setOnPageChangeListener(new OnPageChangeListener() {
-
-			@Override
-			public void onPageSelected(int position) {
-
-			}
-
-			@Override
-			public void onPageScrolled(int position, float arg1, int arg2) {
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int position) {
-			}
-		});
-		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(R.id.bottom_tab_home, homeFragment);
-		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(R.id.bottom_tab_account, accountFragment);
-		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(R.id.bottom_tab_more, moreFragment);
+		/* 注意 此处请按控件排列先后顺序添加！！ */
+		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(bottom_tab_home, homeFragment);
+		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(bottom_tab_account, accountFragment);
+		HaloFragmentManager.getInstance(main_viewpager, this.getSupportFragmentManager()).addFragment(bottom_tab_more, moreFragment);
 	}
 
 	/**
@@ -91,7 +73,6 @@ public class MainActivity extends BaseButterKnifeFragmentActivity {
 			case R.id.bottom_tab_more:
 				break;
 			}
-			SelectableBottomTextViewAttributesEx.onSelectableTextViewID = v.getId();
 			HaloFragmentManager.getInstance(main_viewpager, getSupportFragmentManager()).clickToChangeFragment(v.getId());
 		}
 	};

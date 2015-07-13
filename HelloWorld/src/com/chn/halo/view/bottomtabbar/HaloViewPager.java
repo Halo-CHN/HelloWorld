@@ -53,6 +53,7 @@ public class HaloViewPager extends ViewPager {
 	/**
 	 * @Title: setSlipping
 	 * @param isSlipping
+	 *            是否禁止滑动切换
 	 */
 	public void setSlipping(boolean isSlipping) {
 		this.isSlipping = isSlipping;

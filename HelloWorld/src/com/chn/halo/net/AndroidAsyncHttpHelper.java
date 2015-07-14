@@ -25,6 +25,7 @@ import com.loopj.android.http.RequestParams;
  * @version 1.0
  *
  */
+@SuppressWarnings("deprecation")
 public class AndroidAsyncHttpHelper {
 
 	private static AndroidAsyncHttpHelper instance;
@@ -244,7 +245,7 @@ public class AndroidAsyncHttpHelper {
 				}
 
 				@Override
-				public void onProgress(int bytesWritten, int totalSize) {
+				public void onProgress(long bytesWritten, long totalSize) {
 					super.onProgress(bytesWritten, totalSize);
 					/* 上传进度显示 */
 					// int count = (int) ((bytesWritten * 1.0 / totalSize) *

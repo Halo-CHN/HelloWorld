@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
+@SuppressWarnings("deprecation")
 @SuppressLint({"NewApi", "FloatMath"})
 public class PinchZoom implements OnTouchListener {
 
@@ -136,7 +137,6 @@ public class PinchZoom implements OnTouchListener {
     /**
      * Show an event in the LogCat view, for debugging
      */
-    @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.ECLAIR)
     @SuppressLint("NewApi")
     private void dumpEvent(MotionEvent event) {

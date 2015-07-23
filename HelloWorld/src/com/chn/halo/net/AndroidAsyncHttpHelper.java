@@ -25,7 +25,6 @@ import com.loopj.android.http.RequestParams;
  * @version 1.0
  *
  */
-@SuppressWarnings("deprecation")
 public class AndroidAsyncHttpHelper {
 
 	private static AndroidAsyncHttpHelper instance;

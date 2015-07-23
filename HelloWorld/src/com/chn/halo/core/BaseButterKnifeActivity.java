@@ -42,7 +42,7 @@ public abstract class BaseButterKnifeActivity extends Activity{
 		setContentView(getLayoutResId());
 
 		/* ButterKnife注入 */
-		ButterKnife.inject(this);
+		ButterKnife.bind(this);
 
 		initializeAfterOnCreate();
 	}

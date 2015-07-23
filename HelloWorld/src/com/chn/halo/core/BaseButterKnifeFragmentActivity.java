@@ -34,7 +34,7 @@ public abstract class BaseButterKnifeFragmentActivity extends FragmentActivity {
 		/* 设置显示的资源 */
 		setContentView(getLayoutResId());
 		/* 注入 */
-		ButterKnife.inject(this);
+		ButterKnife.bind(this);
 
 		initializeAfterOnCreate();
 	}

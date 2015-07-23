@@ -45,9 +45,9 @@ class HighlightView {
 	@SuppressLint("NewApi")
 	private void init() {
 		android.content.res.Resources resources = mContext.getResources();
-		mResizeDrawableWidth = resources.getDrawable(R.drawable.camera_crop_width, resources.newTheme());
-		mResizeDrawableHeight = resources.getDrawable(R.drawable.camera_crop_height, resources.newTheme());
-		mResizeDrawableDiagonal = resources.getDrawable(R.drawable.indicator_autocrop, resources.newTheme());
+		mResizeDrawableWidth = resources.getDrawable(R.drawable.camera_crop_width);
+		mResizeDrawableHeight = resources.getDrawable(R.drawable.camera_crop_height);
+		mResizeDrawableDiagonal = resources.getDrawable(R.drawable.indicator_autocrop);
 	}
 
 	boolean mIsFocused;

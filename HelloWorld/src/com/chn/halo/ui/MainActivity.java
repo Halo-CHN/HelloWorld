@@ -1,8 +1,7 @@
 package com.chn.halo.ui;
 
 import android.view.View;
-import butterknife.InjectView;
-
+import butterknife.Bind;
 import com.chn.halo.R;
 import com.chn.halo.core.BaseButterKnifeFragmentActivity;
 import com.chn.halo.util.ToastUtils;
@@ -83,15 +82,15 @@ public class MainActivity extends BaseButterKnifeFragmentActivity {
 
 	MoreFragment moreFragment;
 
-	@InjectView(R.id.main_viewpager)
+	@Bind(R.id.main_viewpager)
 	HaloViewPager main_viewpager;
 
-	@InjectView(R.id.bottom_tab_home)
+	@Bind(R.id.bottom_tab_home)
 	SelectableBottomTextView bottom_tab_home;
 
-	@InjectView(R.id.bottom_tab_account)
+	@Bind(R.id.bottom_tab_account)
 	SelectableBottomTextView bottom_tab_account;
 
-	@InjectView(R.id.bottom_tab_more)
+	@Bind(R.id.bottom_tab_more)
 	SelectableBottomTextView bottom_tab_more;
 }

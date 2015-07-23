@@ -29,7 +29,7 @@ public abstract class BaseButterKnifeFragment extends Fragment {
 			view = inflater.inflate(getLayoutResId(), container, false);
 			if (null != view) {
 				/* ButterKnife注入 */
-				ButterKnife.inject(this, view);
+				ButterKnife.bind(this, view);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public abstract class BaseButterKnifeFragment extends Fragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 		/* 回收 */
-		ButterKnife.reset(this);
+		ButterKnife.unbind(this);
 	}
 	
 	/**

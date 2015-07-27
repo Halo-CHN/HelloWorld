@@ -68,9 +68,13 @@ public abstract class BaseButterKnifeFragmentActivity extends FragmentActivity {
 
 	/**
 	 * 
-	 * @return 是否支持后退键 true-可后退 false-双次退出程序
+	 * @return 是否支持后退键 true-可后退 false-双次退出程序;默认为true，可在子类中重载此方法修改返回结果
+	 * 
 	 */
-	protected abstract boolean supportBackKey();
+	protected boolean supportBackKey()
+	{
+		return true;
+	}
 
 	/**
 	 * 得到初始化Fragment的View所加载的Layout资源

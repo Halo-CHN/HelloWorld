@@ -3,7 +3,7 @@ Welcom To Halo's World.
 
 本项目集成的框架：
 
-##依赖注入 ButterKnife
+###依赖注入 ButterKnife
 
 https://github.com/JakeWharton/butterknife
 

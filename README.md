@@ -7,7 +7,7 @@ Welcom To Halo's World.
 
 https://github.com/JakeWharton/butterknife
 
-Eclipse — 配置： http://jakewharton.github.io/butterknife/ide-eclipse.html
+Eclipse — <a href="http://jakewharton.github.io/butterknife/ide-eclipse.html" target="blank">配置</a>
 
 ####HTTP 网络请求 Android Asynchronous Http Client
 

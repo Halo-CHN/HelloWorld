@@ -38,8 +38,7 @@ public class MainActivity extends BaseButterKnifeFragmentActivity {
 
 	@Override
 	protected void initializeAfterOnCreate() {
-		ToastUtils.show(getThis(), "Welcome To Halo's World.");
-		SelectableBottomTextViewAttributesEx.onSelectableTextViewID = bottom_tab_home.getId();
+		ToastUtils.show(getThis(), "Welcome To Halo's World.");		
 		bottom_tab_home.setOnTextViewClickedListener(bottomListener);
 		bottom_tab_account.setOnTextViewClickedListener(bottomListener);
 		bottom_tab_more.setOnTextViewClickedListener(bottomListener);

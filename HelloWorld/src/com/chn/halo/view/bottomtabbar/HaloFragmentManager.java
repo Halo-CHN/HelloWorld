@@ -32,7 +32,8 @@ public class HaloFragmentManager {
 
 	private static HaloFragmentManager instance;
 
-	public static HaloFragmentManager getInstance(HaloViewPager pViewPager, FragmentManager pFragmentManager) {
+	public static HaloFragmentManager getInstance(HaloViewPager pViewPager,
+			FragmentManager pFragmentManager) {
 		synchronized (HaloFragmentManager.class) {
 			if (null == instance) {
 				synchronized (HaloFragmentManager.class) {
@@ -63,9 +64,11 @@ public class HaloFragmentManager {
 			@Override
 			public void onPageSelected(int position) {
 				for (int i = 0; i < getBottomTextViews().size(); i++) {
-					getBottomTextViews().get(i).setTextViewSelected(i == position);
+					getBottomTextViews().get(i).setTextViewSelected(
+							i == position);
 				}
-				SelectableBottomTextViewAttributesEx.onSelectableTextViewID = getBottomTextViews().get(position).getId();
+				SelectableBottomTextViewAttributesEx.onSelectableTextViewID = getBottomTextViews()
+						.get(position).getId();
 			}
 
 			@Override
@@ -93,6 +96,10 @@ public class HaloFragmentManager {
 
 	public void addFragment(SelectableBottomTextView key, Fragment valueFragment) {
 		if (!fragmetsMap.containsKey(key)) {
+			if (fragmetsMap.size() == 0) {
+				SelectableBottomTextViewAttributesEx.onSelectableTextViewID = key
+						.getId();
+			}
 			fragmetsMap.put(key, valueFragment);
 			fragments.add(valueFragment);
 			bTextViews.add(key);
@@ -104,7 +111,9 @@ public class HaloFragmentManager {
 		if (!(SelectableBottomTextViewAttributesEx.onSelectableTextViewID == id)) {
 			for (SelectableBottomTextView selectableBottomTextView : bTextViews) {
 				if (selectableBottomTextView.getId() == id) {
-					viewPager.setCurrentItem(bTextViews.indexOf(selectableBottomTextView), false);
+					viewPager
+							.setCurrentItem(bTextViews
+									.indexOf(selectableBottomTextView), false);
 				}
 			}
 			SelectableBottomTextViewAttributesEx.onSelectableTextViewID = id;
@@ -137,7 +146,8 @@ public class HaloFragmentManager {
 
 		@Override
 		public void destroyItem(View container, int position, Object object) {
-			((ViewPager) container).removeView(fragments.get(position).getView());
+			((ViewPager) container).removeView(fragments.get(position)
+					.getView());
 		}
 
 		@Override

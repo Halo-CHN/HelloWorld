@@ -9,7 +9,7 @@ https://github.com/JakeWharton/butterknife
 
 Eclipse — <a href="http://jakewharton.github.io/butterknife/ide-eclipse.html" target="blank">配置</a>
 
-####HTTP 网络请求 Android Asynchronous Http Client
+####HTTP 网络请求 Android Async Http Client
 
 http://loopj.com/android-async-http/
 
